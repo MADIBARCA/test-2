@@ -1,54 +1,31 @@
-import { Route, Switch } from 'react-router'
-import { BrowserRouter } from 'react-router-dom'
+import { Route } from "react-router";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
+
+import Step1 from "./pages/login-page/Step1";
+import Step2 from "./pages/login-page/Step2";
 
 export default function App() {
-    return (
-        <BrowserRouter>
-            <header className="h-20 bg-primary flex items-center p-4">
-                <h1 className="text-3xl text-black">Title</h1>
-            </header>
-            <main className="flex flex-col p-4 h-full">
-                <Route path="/login" component={LoginPage} />
-            </main>
-        </BrowserRouter>
-    )
-}
-
-function LoginPage() {
-    return (
+  return (
+    <BrowserRouter>
+      <header className="h-20 bg-primary flex items-center p-4">
+        <h1 className="text-3xl text-black">Title</h1>
+      </header>
+      <main className="flex flex-col p-4 h-full">
         <Switch>
-            <Route>
-                <FormInput />
-                <div className="p-1"></div>
-                <FormCheckbox />
-                <button className="btn btn-primary mt-auto">Hold to proceed</button>
-            </Route>
-            <Route>Not implemented</Route>
+          <Route exact path="/login">
+            <Redirect to="/login/step-1" />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/login/step-1" />
+          </Route>
+          <Route path="/login/step-1">
+            <Step1 />
+          </Route>
+          <Route path="/login/step-2">
+            <Step2 />
+          </Route>
         </Switch>
-    )
-}
-
-function FormCheckbox() {
-    return (
-        <div className="form-control">
-            <label className="label cursor-pointer justify-start gap-2">
-                <input type="checkbox" className="checkbox checkbox-primary" />
-                <span className="label-text">I agree</span>
-            </label>
-        </div>
-    )
-}
-
-function FormInput() {
-    return (
-        <label className="form-control">
-            <div className="label">
-                <span className="label-text">Email</span>
-            </div>
-            <input type="text" placeholder="Type here" className="input" />
-            {/* <div className="label">
-                <span className="label-text-alt">Helper text</span>
-            </div> */}
-        </label>
-    )
+      </main>
+    </BrowserRouter>
+  );
 }
